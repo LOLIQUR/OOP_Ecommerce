@@ -7,3 +7,6 @@ __pycache__/
 .env
 .idea/
 .idea/
+.idea/
+__pycache__/
+*.pyc
