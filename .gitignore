@@ -2,8 +2,11 @@
 __pycache__/
 .pytest_cache/
 .coverage
-htmlcov/
 *.pyc
 .DS_Store
 .env
 .idea/
+.idea/
+.idea/
+__pycache__/
+*.pyc
