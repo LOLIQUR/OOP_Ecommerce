@@ -23,10 +23,30 @@ class Category:
         """
         self.name = name
         self.description = description
-        self.products = products
+        self._products = products  # Приватный атрибут
 
         # Увеличиваем счётчик категорий
         Category.category_count += 1
 
         # Увеличиваем счётчик товаров
         Category.product_count += len(products)
+
+    def add_product(self, product: Product) -> None:
+        """
+        Добавляет продукт в категорию.
+
+        Args:
+            product: Объект класса Product
+        """
+        self._products.append(product)
+        Category.product_count += 1
+
+    @property
+    def products(self) -> str:
+        """
+        Геттер для получения строки всех продуктов в категории.
+        """
+        result = ""
+        for product in self._products:
+            result += f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n"
+        return result.rstrip("\n")
