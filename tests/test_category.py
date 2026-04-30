@@ -1,46 +1,60 @@
 """
 Тесты для класса Category.
 """
-from src.product import Product
 from src.category import Category
+from src.product import Product
 
 
 class TestCategory:
-    """Тесты для категорий."""
+    """Тесты для класса Category."""
 
     def test_category_creation(self):
-        """Тест создания категории."""
-        product1 = Product("Телевизор", "4K телевизор", 45000.0, 3)
-        product2 = Product("Плеер", "Blu-ray плеер", 10000.0, 7)
-        category = Category(
-            "Электроника", "Бытовая техника", [product1, product2]
-        )
-
+        product = Product("Ноутбук", "Мощный ноутбук", 50000, 10)
+        category = Category("Электроника", "Вся электроника", [product])
         assert category.name == "Электроника"
-        assert category.description == "Бытовая техника"
-        assert len(category.products) == 2
+        assert category.description == "Вся электроника"
+        assert category._Category__products == [product]
 
     def test_category_count_increment(self):
         """Тест увеличения счётчика категорий."""
-        Category.category_count = 0  # Сброс для чистоты теста
-        Category("Книги", "Художественная литература", [])
-        Category("Игрушки", "Детские игрушки", [])
+        Category.category_count = 0
+        Category.product_count = 0
+
+        category1 = Category("Электроника", "Вся электроника", [])
+        category2 = Category("Одежда", "Вся одежда", [])
+        # используем переменные, чтобы не было ошибки F841
+        assert category1.name == "Электроника"
+        assert category2.name == "Одежда"
         assert Category.category_count == 2
 
     def test_product_count_increment(self):
         """Тест увеличения счётчика продуктов."""
         Category.category_count = 0
         Category.product_count = 0
-
-        p1 = Product("Книга", "Приключения", 500.0, 10)
-        p2 = Product("Ручка", "Шариковая", 50.0, 100)
-        Category("Канцелярия", "Товары для офиса", [p1, p2])
-
+        product1 = Product("Ноутбук", "Мощный", 50000, 10)
+        product2 = Product("Мышь", "Беспроводная", 1500, 25)
+        category = Category("Электроника", "Вся электроника", [product1, product2])
+        assert category.name == "Электроника"
         assert Category.product_count == 2
 
     def test_empty_products_list(self):
-        """Тест категории без товаров."""
-        category = Category(
-            "Пустая", "Без товаров", []
-        )
-        assert len(category.products) == 0
+        category = Category("Пустая", "Пустая категория", [])
+        assert category._Category__products == []
+
+    def test_add_product(self):
+        Category.category_count = 0
+        Category.product_count = 0
+
+        category = Category("Электроника", "Вся электроника", [])
+        product = Product("Ноутбук", "Мощный ноутбук", 50000, 10)
+        category.add_product(product)
+        assert product in category._Category__products
+        assert Category.product_count == 1
+
+    def test_products_property(self):
+        """Тест геттера products."""
+        product1 = Product("Ноутбук", "Мощный", 50000, 10)
+        product2 = Product("Мышь", "Беспроводная", 1500, 25)
+        category = Category("Электроника", "Вся электроника", [product1, product2])
+        expected = "Ноутбук, 50000 руб. Остаток: 10 шт.\nМышь, 1500 руб. Остаток: 25 шт."
+        assert category.products == expected
