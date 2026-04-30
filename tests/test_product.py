@@ -8,17 +8,15 @@ class TestProduct:
     """Тесты для класса Product."""
 
     def test_product_creation(self):
-        """Тест создания товара."""
         product = Product("Ноутбук", "Мощный ноутбук", 50000, 10)
         assert product.name == "Ноутбук"
         assert product.description == "Мощный ноутбук"
-        assert product._price == 50000
+        assert product._Product__price == 50000  # доступ к приватному атрибуту
         assert product.quantity == 10
 
     def test_product_price_type(self):
-        """Тест типа цены."""
         product = Product("Ноутбук", "Мощный", 50000.5, 10)
-        assert isinstance(product._price, float)
+        assert isinstance(product._Product__price, float)
 
     def test_product_quantity_type(self):
         """Тест типа количества."""
@@ -26,7 +24,6 @@ class TestProduct:
         assert isinstance(product.quantity, int)
 
     def test_new_product_classmethod(self):
-        """Тест класс-метода new_product."""
         data = {
             "name": "Смартфон",
             "description": "Современный смартфон",
@@ -36,7 +33,7 @@ class TestProduct:
         product = Product.new_product(data)
         assert product.name == "Смартфон"
         assert product.description == "Современный смартфон"
-        assert product._price == 30000
+        assert product._Product__price == 30000
         assert product.quantity == 5
 
     def test_price_getter(self):

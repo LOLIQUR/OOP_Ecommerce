@@ -9,12 +9,11 @@ class TestCategory:
     """Тесты для класса Category."""
 
     def test_category_creation(self):
-        """Тест создания категории."""
         product = Product("Ноутбук", "Мощный ноутбук", 50000, 10)
         category = Category("Электроника", "Вся электроника", [product])
         assert category.name == "Электроника"
         assert category.description == "Вся электроника"
-        assert category._products == [product]
+        assert category._Category__products == [product]
 
     def test_category_count_increment(self):
         """Тест увеличения счётчика категорий."""
@@ -39,19 +38,17 @@ class TestCategory:
         assert Category.product_count == 2
 
     def test_empty_products_list(self):
-        """Тест категории с пустым списком товаров."""
         category = Category("Пустая", "Пустая категория", [])
-        assert category._products == []
+        assert category._Category__products == []
 
     def test_add_product(self):
-        """Тест метода add_product."""
         Category.category_count = 0
         Category.product_count = 0
 
         category = Category("Электроника", "Вся электроника", [])
         product = Product("Ноутбук", "Мощный ноутбук", 50000, 10)
         category.add_product(product)
-        assert product in category._products
+        assert product in category._Category__products
         assert Category.product_count == 1
 
     def test_products_property(self):
