@@ -2,6 +2,7 @@
 Тесты для класса Category.
 """
 import pytest
+
 from src.category import Category
 from src.product import Product
 
