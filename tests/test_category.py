@@ -1,8 +1,10 @@
 """
 Тесты для класса Category.
 """
-from src.product import Product
+import pytest
+
 from src.category import Category
+from src.product import Product
 
 
 class TestCategory:
@@ -18,7 +20,7 @@ class TestCategory:
 
         assert category.name == "Электроника"
         assert category.description == "Бытовая техника"
-        assert len(category.products) == 2
+        assert len(category._Category__products) == 2  # проверяем приватный атрибут
 
     def test_category_count_increment(self):
         """Тест увеличения счётчика категорий."""
@@ -44,3 +46,9 @@ class TestCategory:
             "Пустая", "Без товаров", []
         )
         assert len(category.products) == 0
+
+    def test_add_product_invalid_type(self):
+        """Тест добавления не-продукта в категорию."""
+        category = Category("Электроника", "Вся электроника", [])
+        with pytest.raises(TypeError, match="В категорию можно добавлять только объекты Product"):
+            category.add_product("не продукт")
