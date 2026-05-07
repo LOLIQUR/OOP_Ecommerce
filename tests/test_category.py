@@ -1,8 +1,8 @@
 """
 Тесты для класса Category.
 """
-from src.product import Product
 from src.category import Category
+from src.product import Product
 
 
 class TestCategory:
@@ -18,7 +18,7 @@ class TestCategory:
 
         assert category.name == "Электроника"
         assert category.description == "Бытовая техника"
-        assert len(category.products) == 2
+        assert len(category._Category__products) == 2
 
     def test_category_count_increment(self):
         """Тест увеличения счётчика категорий."""
